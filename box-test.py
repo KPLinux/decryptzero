@@ -1,0 +1,19 @@
+from algs import boxing_alg, arg_maker
+from boxdetect import config
+from boxdetect.pipelines import get_boxes
+import matplotlib.pyplot as plt
+import cv2
+import numpy as np
+import argparse
+import imutils
+
+args = ['image', 'template']
+arg_maker(args)
+
+file_path = cv2.imread(args["template"], cv2.IMREAD_GRAYSCALE)
+
+cfg_list = [(340,400), (50,90), (4.5, 5.5), [12.0]]
+
+plt.figure(figsize = (20,20))
+plt.imshow(boxing_alg(file_path, cfg_list)[3])
+plt.show()
