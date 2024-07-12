@@ -1,2 +1,2 @@
-# chess-notation-ocr
+# DecryptZero
 
