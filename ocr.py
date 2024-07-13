@@ -7,18 +7,19 @@ import imutils
 def clean_text(text):
     return "".join([c if ord(c) < 128 else "" for c in text]).strip()
 
-args = ['image', 'template']
-required = [True, True]
-help = ["path to image being aligned with template", "path to template image"]
+args = ['image', 'align-template', 'box-template']
+required = [True, True, True]
+help = ["path to image being aligned with template", "path to alignment template image", "path to boxing template image"]
 
 args_final = arg_maker(args, required, help)
 
 print("[INFO] loading images...")
 image = cv2.imread(args_final["image"])
-template = cv2.imread(args_final["template"])
+align_template = cv2.imread(args_final["align_template"])
+box_template = cv2.imread(args_final["box_template"])
 
 print("[INFO] aligning images...")
-aligned = align_images(image, template)	
+aligned = align_images(image, align_template)	
 
 print("[INFO] OCR'ing document...")
 parsingResults = []
@@ -26,8 +27,8 @@ parsingResults = []
 OCRLocation = namedtuple("OCRLocation", ["id", "bbox", "filter_keywords"])
 OCR_LOCATIONS = []
 
-cfg_list = [(340,400), (50,90), (4.5, 5.5), [1.0]]
-boxes = boxing_alg(template, cfg_list)
+cfg_list = [(340,400), (50,90), (4.5, 5.5), [12.0]]
+boxes = boxing_alg(box_template, cfg_list)
 
 for i in range(len(boxes[1])):
 	if i % 2 == 1:

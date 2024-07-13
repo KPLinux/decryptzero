@@ -8,9 +8,11 @@ import argparse
 import imutils
 
 args = ['image', 'template']
-arg_maker(args)
+required = [True, True]
+help = ["image", "template"]
+args_final = arg_maker(args, required, help)
 
-file_path = cv2.imread(args["template"], cv2.IMREAD_GRAYSCALE)
+file_path = cv2.imread(args_final["template"], cv2.IMREAD_GRAYSCALE)
 
 cfg_list = [(340,400), (50,90), (4.5, 5.5), [12.0]]
 

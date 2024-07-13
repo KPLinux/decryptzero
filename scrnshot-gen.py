@@ -12,7 +12,7 @@ args_final = arg_maker(args, required, help)
 image = cv2.imread(args_final["image"])
 template = cv2.imread(args_final["template"])
 
-cfg_list = [(340,400), (50,90), (4.5, 5.5), [1.0]]
+cfg_list = [(340,400), (50,90), (4.5, 5.5), [12.0]]
 boxes = boxing_alg(template, cfg_list)
 
 aligned = align_images(image, template)	
