@@ -66,6 +66,6 @@ def arg_maker(args_in, required, help):
 
     return args_out
 
-def create_file(filename, content=""):
+def create_file(filename, content):
     with open(filename, 'w') as f:
         f.write(content)
