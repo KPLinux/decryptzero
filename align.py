@@ -1,7 +1,6 @@
 import cv2
 import imutils
 import numpy as np
-import argparse
 from algs import align_images, arg_maker
 
 args = ['image', 'template']
