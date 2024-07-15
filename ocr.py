@@ -4,6 +4,8 @@ import pytesseract
 import cv2
 import imutils
 
+custom_config = r'--tessdata-dir "/usr/share/tesseract-ocr/5/tessdata" -l decrypt'
+
 def clean_text(text):
     return "".join([c if ord(c) < 128 else "" for c in text]).strip()
 
@@ -27,7 +29,7 @@ parsingResults = []
 OCRLocation = namedtuple("OCRLocation", ["id", "bbox", "filter_keywords"])
 OCR_LOCATIONS = []
 
-cfg_list = [(340,400), (50,90), (4.5, 5.5), [12.0]]
+cfg_list = [(340,400), (50,90), (4.5, 5.5), [1.0]]
 boxes = boxing_alg(box_template, cfg_list)
 
 for i in range(len(boxes[1])):
@@ -40,7 +42,7 @@ for loc in OCR_LOCATIONS:
 	(x, y, w, h) = loc.bbox
 	roi = aligned[y:y + h, x:x + w]
 	rgb = cv2.cvtColor(roi, cv2.COLOR_BGR2RGB)
-	text = pytesseract.image_to_string(rgb)
+	text = pytesseract.image_to_string(rgb, config = custom_config)
 	for line in text.split("\n"):
 		if len(line) == 0:
 			continue
