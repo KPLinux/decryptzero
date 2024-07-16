@@ -7,7 +7,7 @@ import numpy as np
 pieces_list=['B', 'N', 'R', 'Q', 'K']
 files_list=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 ranks_list=['1', '2', '3', '4', '5', '6', '7', '8']
-endings=['+', '=']
+endings=['+', '#']
 captures=['x']
 
 def main():
