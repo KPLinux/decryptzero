@@ -1,41 +1,28 @@
-import chess
+import chess, chess.svg
+import copy
 
-board = chess.Board()
+def find_valid_move_lists_helper(starting_fen, starting_move, move_list):
+    valid_move_lists = []
+    board = chess.Board(starting_fen)
+    for i in range(starting_move, len(move_list)): # Iterate through all moves in the game
+        if move_list[i] is None: # Case 1: Current move was marked missing
+            chess.svg.board(board)
+            legal_moves = board.legal_moves
+            for j in legal_moves:
+                current_list = copy.deepcopy(move_list)
+                current_list[i] = board.san(j)
+                valid_move_lists += find_valid_move_lists_helper(board.fen(), i, current_list)
+            return valid_move_lists
+        else: # Current move
+            try:
+                board.push_san(move_list[i]) # Case 2: Current move is valid
+            except Exception as e:
+                return [] # Case 3: Current move is invalid
+    current_list = copy.deepcopy(move_list)
+    return [current_list] # Case 4: Reached end of move list
 
-test_game = ['e4', 'e5', 'Qf3', 'Nc6', 'Bc5', 'Qxf7#']
+def find_valid_move_lists(move_list):
+    starting_fen = chess.Board().fen()
+    return find_valid_move_lists_helper(starting_fen, 0, move_list)
 
-i = 0
-
-# iterates through each move in the game
-for ply in test_game:
-    
-    # makes the move
-    board.push_san(ply)
-    
-    # creates a list of all legal moves for the next player to move in that position
-    legal_moves_list = [board.san(move) for move in board.legal_moves]
-    print(legal_moves_list)
-
-    '''
-    checks if the index is greater than the length of the game
-    useful for terminating the process at the end of the game
-    '''
-    if i > len(test_game):
-        break
-
-    # checks if the next notated move is illegal
-    elif test_game[i + 1] not in legal_moves_list:
-        for lm in legal_moves_list:
-            board.push_san(lm)
-            legal_moves_list2 = [board.san(move) for move in board.legal_moves]
-            if test_game[i + 1] in legal_moves_list2:
-                test_game.insert(i + 1, lm) 
-            board.pop()
-    i += 1
-
-    # checks if the current move is unknown
-    if ply == None:
-        i += 1
-        continue
-
-print(test_game)
+print(find_valid_move_lists(['e4', 'e5', 'Nf3', None, 'Bc4', 'Nf6', 'Ng5', 'd5', 'exd5', 'Na5']))
