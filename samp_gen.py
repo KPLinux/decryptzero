@@ -20,7 +20,7 @@ def main():
 
     if not os.path.exists(samples_dir):
         os.makedirs(samples_dir)
-    for i in range(5):
+    for i in range(50000):
         cending=random.randint(0,8)
         if cending==1:
             cending=True
@@ -31,7 +31,7 @@ def main():
             ccapt=True
         else:
             ccapt=False
-        gen_img(directory, samples_dir, cending, ccapt)
+        gen_img(directory, samples_dir, cending, ccapt, i)
 
 
 def apply_random_transformations(image):
@@ -54,11 +54,11 @@ def get_rand_img(directory, prefix):
         raise FileNotFoundError(f"no files with {prefix} in {directory}")
     return random.choice(files)
 
-def get_next_suffix(directory, base_name):
-    suffix=1
-    while os.path.exists(os.path.join(directory, f"{suffix}__{base_name}.png")):
-        suffix += 1
-    return suffix
+# def get_next_suffix(directory, base_name):
+    # suffix=1
+    # while os.path.exists(os.path.join(directory, f"{suffix}__{base_name}.png")):
+    #     suffix += 1
+    # return suffix
 
 def pad_image(image, height):
     if len(image.shape) == 2:  # Grayscale image
@@ -83,7 +83,7 @@ def combine_imgs(images):
         padded_images=[pad_image(img, max_height) for img in images]
         return cv2.hconcat(padded_images)
 
-def gen_img(directory, samples_dir, cending, ccapt):
+def gen_img(directory, samples_dir, cending, ccapt, suffix):
     piece=random.choice(pieces_list)
     file=random.choice(files_list)
     rank=random.choice(ranks_list)
@@ -116,7 +116,7 @@ def gen_img(directory, samples_dir, cending, ccapt):
         combined_img=combine_imgs([piece_img, capture_img, file_img, rank_img, shach_img])
         base_name=f"{piece}{capture}{file}{rank}{shach}"
 
-    suffix=get_next_suffix(samples_dir, base_name)
+    # suffix=get_next_suffix(samples_dir, base_name)
     output_path=os.path.join(samples_dir, f"{suffix}__{base_name}.png")
 
     cv2.imwrite(output_path, combined_img)

@@ -1,5 +1,4 @@
 from algs import create_file
-import os
 
 i = 0
 
@@ -14,7 +13,7 @@ start = 0
 
 
 line_list = []
-for line in open("/home/kplinux/projects/ocr/samples/handwriting-generation/words_new.txt", 'r'):
+for line in open("/home/kplinux/projects/ocr/samples/labels1.txt", 'r'):
     for char in range(len(line)):
         if line[char] == ' ':
             line_list.append(line[start:char])
@@ -24,10 +23,12 @@ for line in open("/home/kplinux/projects/ocr/samples/handwriting-generation/word
         if n == '':
             line_list.remove(n)
         line_list = list(map(lambda x: x.replace('\n',''), line_list))
-    create_file("/home/kplinux/projects/ocr/tesstrain/data/decrypt-ground-truth/" + line_list[0] + ".gt.txt", line_list[8])
+    create_file("/home/kplinux/projects/ocr/samples/decrypt-ground-truth2/" 
+                + str(i) + "__" + line_list[0] + ".gt.txt", line_list[0])
     print(line_list)
     line_list = []
     start = 0
+    i += 1
 
 
 
