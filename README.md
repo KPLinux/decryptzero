@@ -10,7 +10,7 @@ The engine has completed training. It runs with superb accuracy on single-word i
 Integrate the engine with `ocr-easy.py` to test on full notation-sheets rather than one-word samples.
 
 ## Usage
-Clone the repository with `git clone https://codeberg.org/KPLinux/DecryptZero`. The main file is [ocr-easy.py](ocr-easy.py); however, since the engine is still in testing phase, it is better to use [ocr-tess.py](ocr.tess.py) (untrained) for demonstration purposes.
+Clone the repository with `git clone https://codeberg.org/KPLinux/DecryptZero`. The main file is [ocr-easy.py](ocr-easy.py); however, since the engine is still in integration phase, it is likely not to function (yet). Fix will come out soon.
 
 To use the OCR, you will need to pass 3 arguments:
 * `--image` - the path to the image you would like to OCR
