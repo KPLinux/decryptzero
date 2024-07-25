@@ -70,7 +70,23 @@ pip install matplotlib
 
 ### Preparing the Model
 
-Clone the repository with `git clone https://codeberg.org/KPLinux/DecryptZero`. Make sure you are in the `decrypt-engine` directory:
+Clone the repository with `git clone https://codeberg.org/KPLinux/DecryptZero`. 
+
+Now you must move the engine files to the `/.EasyOCR/` directory. However, sometimes this directory isn't created until you install the default English model.
+
+To create the directory, switch to the `ocr/` directory and run `easy-test2.py`:
+
+```shell
+cd /path/to/ocr/
+```
+
+```shell
+python3 easy-test2.py
+```
+
+This command will create the directory and install the default English model.
+
+Now make sure you are in the `decrypt-engine` directory:
 
 ```shell
 cd /path/to/ocr/decrypt-engine/
