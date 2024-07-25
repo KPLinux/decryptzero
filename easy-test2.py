@@ -4,7 +4,7 @@ import easyocr
 import cv2
 import imutils
 
-reader = easyocr.Reader(['en'], gpu = True, recog_network='decryptzero2')
+reader = easyocr.Reader(['en'])
 
 result = reader.readtext('./sample/image.png')
 print(result)
