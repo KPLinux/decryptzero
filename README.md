@@ -20,52 +20,52 @@ The three main libraries needed to run the programs are **OpenCV**, **EasyOCR**,
 #### Main
 You can install OpenCV with `apt` or as a `pip` package *(recommended)*:
 ```
-$ sudo apt-get install python3-opencv
+sudo apt-get install python3-opencv
 ```
 ```
-$ pip install opencv-python
+pip install opencv-python
 ```
 
 You can install EasyOCR and boxdetect as `pip` packages:
 ```
-$ pip install easyocr
+pip install easyocr
 ```
 ```
-$ pip install boxdetect
+pip install boxdetect
 ```
 
 #### Other
 Since the program is run in the command line with custom arguments, you will need to install `argparse` (if it is not already installed):
 ```
-$ pip install argparse
+pip install argparse
 ```
 
 You will need to install `imutils`, which is used for resizing the output to be visualized properly:
 ```
-$ pip install imutils
+pip install imutils
 ```
 
 You will also need to install `numpy` for proper conversion of data types and `matplotlib` to visualize results:
 ```
-$ pip install numpy
+pip install numpy
 ```
 ```
-$ pip install matplotlib
+pip install matplotlib
 ```
 
 ### Preparing the Model
 Clone the repository with `git clone https://codeberg.org/KPLinux/DecryptZero`. Make sure you are in the `decrypt-engine` directory:
 ```
-$ cd /path/to/ocr/decrypt-engine/
+cd /path/to/ocr/decrypt-engine/
 ```
 
 Then, move the `decryptzero.pth` file to `/.EasyOCR/model/`:
 ```
-$ mv decryptzero.pth /path/to/.EasyOCR/model/
+mv decryptzero.pth /path/to/.EasyOCR/model/
 ```
 and the `decryptzero.yaml` and `decryptzero.py` files to `/.EasyOCR/user_network/`:
 ```
-$ mv decryptzero.yaml decryptzero.py /path/to/.EasyOCR/user_network/
+mv decryptzero.yaml decryptzero.py /path/to/.EasyOCR/user_network/
 ```
 
 ### Running the Program
@@ -80,12 +80,12 @@ To use the OCR (through the CLI), you will need to pass 3 arguments:
 
 Make sure you are in the `ocr/` directory:
 ```
-$ cd /path/to/ocr/
+cd /path/to/ocr/
 ```
 
 Paste this line to run on the sample image & templates:
 ```
-$ python3 ocr-easy.py --image sample/image.png --align-template sample/align-template.png --box-template sample/box-template.png
+python3 ocr-easy.py --image sample/image.png --align-template sample/align-template.png --box-template sample/box-template.png
 ```
 
 The output will be the input image and a carbon copy of that image with bounding boxes and the detected text in each bounding box (still WIP). In the command line you will see the model generating what it thinks is the text within each bounding box.
