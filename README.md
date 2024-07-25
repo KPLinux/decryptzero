@@ -20,7 +20,7 @@ The three main libraries needed to run the programs are **OpenCV**, **EasyOCR**,
 #### Main
 You can install OpenCV with `apt` or as a `pip` package *(recommended)*:
 ```
-sudo apt-get install python3 opencv
+sudo apt-get install python3-opencv
 ```
 ```
 pip install opencv-python
@@ -53,10 +53,23 @@ pip install numpy
 pip install matplotlib
 ```
 
-### Running the Program
-Clone the repository with `git clone https://codeberg.org/KPLinux/DecryptZero`. The main file is [ocr-easy.py](ocr-easy.py).
+### Preparing the Model
+Clone the repository with `git clone https://codeberg.org/KPLinux/DecryptZero`. Make sure you are in the `decrypt-engine` directory:
+```
+cd /path/to/ocr/decrypt-engine/
+```
 
-The model files are too large to be pushed to the repository, so they are linked in a Google Drive [here](https://drive.google.com/drive/u/0/folders/1GTqZIXgyWEjPCoaXjRuHV2CLwYTYAeSv) instead.
+Then, move the `decryptzero.pth` file to `/.EasyOCR/model/`:
+```
+mv decryptzero.pth /path/to/.EasyOCR/model/
+```
+and the `decryptzero.yaml` and `decryptzero.py` files to `/.EasyOCR/user_network/`:
+```
+mv decryptzero.yaml decryptzero.py /path/to/.EasyOCR/user_network/
+```
+
+### Running the Program
+The main file is [ocr-easy.py](ocr-easy.py).
 
 Currently, the only way to run the program is through the command line interface. A graphical user interface may come in the future.
 
@@ -65,10 +78,12 @@ To use the OCR (through the CLI), you will need to pass 3 arguments:
 * `--align-template` - the path to the template that the image will be aligned with during preprocessing
 * `--box-template` - the path to the template that will create the bounding boxes where OCR will be performed
 
-Make sure you are in the `ocr/` directory.
+Make sure you are in the `ocr/` directory:
+```
+cd /path/to/ocr/
+```
 
 Paste this line to run on the sample image & templates:
-
 ```
 python3 ocr-easy.py --image sample/image.png --align-template sample/align-template.png --box-template sample/box-template.png
 ```

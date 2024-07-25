@@ -1,10 +1,11 @@
-from algs import align_images, arg_maker, boxing_alg
+from algs import align_images, arg_maker, boxing_alg, bold_images
 from collections import namedtuple
 import easyocr
 import cv2
 import imutils
+import matplotlib.pyplot as plt
 
-reader = easyocr.Reader(['en'], gpu = True)
+reader = easyocr.Reader(['en'], gpu = True, recog_network='decryptzero')
 
 def clean_text(text):
     return "".join([c if ord(c) < 128 else "" for c in text]).strip()
@@ -42,15 +43,16 @@ for loc in OCR_LOCATIONS:
 	(x, y, w, h) = loc.bbox
 	roi = aligned[y:y + h, x:x + w]
 	rgb = cv2.cvtColor(roi, cv2.COLOR_BGR2RGB)
-	text = reader.readtext(rgb)
-	print(text)
-	for line in text[0].split("\n"):
+	bold = bold_images(rgb)
+	text = reader.readtext(bold)
+	if len(text) == 0:
+		continue
+	else: 
+		print(text[0][1])
+	for line in text[0][1]:
 		if len(line) == 0:
 			continue
-		lower = line.lower()
-		count = sum([lower.count(x) for x in loc.filter_keywords])
-		if count == 0:
-			parsingResults.append((loc, line))
+		parsingResults.append((loc, line))
 
 results = {}
 for (loc, line) in parsingResults:
