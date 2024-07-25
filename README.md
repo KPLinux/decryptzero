@@ -73,7 +73,7 @@ Paste this line to run on the sample image & templates:
 python3 ocr-easy.py --image sample/image.png --align-template sample/align-template.png --box-template sample/box-template.png
 ```
 
-The output will be the input image and a carbon copy of that image with bounding boxes and the detected text in each bounding box.
+The output will be the input image and a carbon copy of that image with bounding boxes and the detected text in each bounding box (still WIP). In the command line you will see the model generating what it thinks is the text within each bounding box.
 
 There are currently two template options because the alignment algorithm looks for key points on the image to be mapped to the template (which must be a carbon copy of the image) and the boxing algorithm looks for grid lines on the template (which requires a preprocessed image that has the gridlines enhanced to be darker). Because the nature of these templates are fundamentally different, the arguments cannot (yet) be combined into a single `--template` argument.
 
