@@ -70,10 +70,10 @@ Clone the repository with `git clone https://codeberg.org/KPLinux/DecryptZero`.
 
 Now you must move the engine files to the `/.EasyOCR/` directory. However, sometimes this directory isn't created until you install the default English model.
 
-To create the directory, switch to the `ocr/` directory and run `easy-test2.py`:
+To create the directory, switch to the `DecryptZero/` directory and run `easy-test2.py`:
 
 ```shell
-cd /path/to/ocr/
+cd /path/to/DecryptZero/
 ```
 
 ```shell
@@ -85,7 +85,7 @@ This command will create the directory and install the default English model.
 Now make sure you are in the `decrypt-engine` directory:
 
 ```shell
-cd /path/to/ocr/decrypt-engine/
+cd /path/to/DecryptZero/decrypt-engine/
 ```
 
 Then, move the `decryptzero.pth` file to `/.EasyOCR/model/`:
@@ -110,10 +110,10 @@ To use the OCR (through the CLI), you will need to pass 3 arguments:
 * `--align-template` - the path to the template that the image will be aligned with during preprocessing
 * `--box-template` - the path to the template that will create the bounding boxes where OCR will be performed
 
-Make sure you are in the `ocr/` directory:
+Make sure you are in the `DecryptZero/` directory:
 
 ```shell
-cd /path/to/ocr/
+cd /path/to/DecryptZero/
 ```
 
 Paste this line to run on the sample image & templates:
