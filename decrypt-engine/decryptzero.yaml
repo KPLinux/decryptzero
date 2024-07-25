@@ -1,0 +1,42 @@
+network_params:
+  input_channel: 1
+  output_channel: 512
+  hidden_size: 256
+lang_list:
+         - 'en'
+character_list: 0123456789abcdefghijklmnopqrstuvwxyz+#
+# character_list: 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+exp_name: TPS-ResNet-BiLSTM-Attn-Seed1111
+train_data: train-data-lmdb
+valid_data: valid-data-lmdb
+manualSeed: 1111
+workers: 0
+batch_size: 64
+num_iter: 1024
+valInterval: 16
+saved_model: 
+FT: False
+adam: False
+lr: 1
+beta1: 0.9
+rho: 0.95
+eps: 1e-08
+grad_clip: 5
+baiduCTC: False
+select_data: ['/']
+batch_ratio: ['1.0']
+total_data_usage_ratio: 1.0
+batch_max_length: 5
+imgH: 32
+imgW: 100
+rgb: False
+sensitive: True
+PAD: False
+data_filtering_off: True
+Transformation: TPS
+FeatureExtraction: ResNet
+SequenceModeling: BiLSTM
+Prediction: Attn
+num_fiducial: 20
+num_gpu: 1
+num_class: 96
