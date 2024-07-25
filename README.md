@@ -61,11 +61,7 @@ pip install imutils
 You will also need to install `numpy` for proper conversion of data types and `matplotlib` to visualize results:
 
 ```shell
-pip install numpy
-```
-
-```shell
-pip install matplotlib
+pip install numpy matplotlib
 ```
 
 ### Preparing the Model
