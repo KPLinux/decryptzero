@@ -66,7 +66,11 @@ pip install numpy matplotlib
 
 ### Preparing the Model
 
-Clone the repository with `git clone https://codeberg.org/KPLinux/DecryptZero`. 
+Clone the repository:
+
+```
+git clone https://codeberg.org/KPLinux/DecryptZero. 
+```
 
 Now you must move the engine files to the `/.EasyOCR/` directory. However, sometimes this directory isn't created until you install the default English model.
 
