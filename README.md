@@ -66,7 +66,14 @@ pip install numpy matplotlib
 
 ### Preparing the Model
 
-Clone the repository:
+The model files are quite large, so you will need to install Git Large File Storage (Git LFS) to handle them:
+
+```shell
+sudo apt-get install git-lfs
+git lfs install
+```
+
+Once you have git LFS set up, clone the repository:
 
 ```
 git clone https://codeberg.org/KPLinux/DecryptZero. 
