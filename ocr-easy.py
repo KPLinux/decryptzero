@@ -5,7 +5,7 @@ import cv2
 import imutils
 import matplotlib.pyplot as plt
 
-reader = easyocr.Reader(['en'], gpu = True, recog_network='decryptzero')
+reader = easyocr.Reader(['en'], gpu = True, recog_network='decryptzero3')
 
 def clean_text(text):
     return "".join([c if ord(c) < 128 else "" for c in text]).strip()
@@ -30,7 +30,7 @@ parsingResults = []
 OCRLocation = namedtuple("OCRLocation", ["id", "bbox", "filter_keywords"])
 OCR_LOCATIONS = []
 
-cfg_list = [(340,400), (50,90), (4.5, 5.5), [1.0]]
+cfg_list = [(340,400), (50,90), (4.5, 5.5), [12.0]]
 boxes = boxing_alg(box_template, cfg_list)
 
 for i in range(len(boxes[1])):
