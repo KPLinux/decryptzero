@@ -7,12 +7,12 @@ import numpy as np
 import argparse
 import imutils
 
-args = ['image', 'template']
-required = [True, True]
-help = ["image", "template"]
+args = ['template']
+required = [True]
+help = ["template"]
 args_final = arg_maker(args, required, help)
 
-file_path = cv2.imread(args_final["template"], cv2.IMREAD_GRAYSCALE)
+file_path = cv2.imread(args_final["template"])
 
 cfg_list = [(340,400), (50,90), (4.5, 5.5), [12.0]]
 

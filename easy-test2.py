@@ -4,7 +4,7 @@ import easyocr
 import cv2
 import imutils
 
-reader = easyocr.Reader(['en'])
+reader = easyocr.Reader(['en'], gpu=False)
 
 result = reader.readtext('./sample/image.png')
 print(result)

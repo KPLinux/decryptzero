@@ -33,10 +33,14 @@ def align_images(image, template, maxFeatures = 500, keepPercent = 0.2, debug = 
     return aligned
 
 def bold_images(image):
-    _, bw_image = cv2.threshold(image, 230, 255, cv2.THRESH_BINARY)
+    
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    blurred = cv2.GaussianBlur(gray, (7, 7), 0)
+    thresh = cv2.adaptiveThreshold(blurred, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 21, 10)
 
-    kernel = np.ones((4, 4), np.uint8)
-    bold_image = cv2.erode(bw_image, kernel, iterations=1)
+    kernel = np.ones((3, 3), np.uint8)
+    bold_image = cv2.erode(thresh, kernel, iterations=1)
+    bold_image = cv2.bitwise_not(bold_image)
     return bold_image
 
 def boxing_alg(template, cfg_list):
