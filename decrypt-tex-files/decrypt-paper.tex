@@ -1,0 +1,145 @@
+\documentclass[12pt, two column, letterpaper]{article}
+
+\usepackage{comment}
+\usepackage{graphicx}
+
+% title page
+\title{DecryptZero \\ \vspace{0.25cm}
+\normalsize An Optical Character Recognition model for chess tournament notation sheets}
+\author{Kanishk Premchander\thanks{Institute for Computing in Research 2024}}
+\date{July 2024}
+\begin{document}
+\maketitle
+
+% ----------------------------------------------------------------------------------------------------------------------
+
+\newpage
+
+% ----------------------------------------------------------------------------------------------------------------------
+
+% section 1 - introduction
+\section{Introduction}
+
+DecryptZero is an OCR (optical character recognition) model trained to read notation sheets from chess tournaments.
+DecryptZero runs on a modified version of EasyOCR that is trained on a variety of handwriting samples to increase
+the accuracy of the notation sheet reading algorithm.
+
+% section 2 - background
+\section{Background}
+
+When chess players want to analyze their online games, it is as simple as clicking a few buttons. The moves played
+in the game are parsed into a PGN (Portable Game Notation), which is then fed into a strong chess engine such as 
+Stockfish (which is currently the strongest chess engine in the world). The player can then look through the 
+game with the assistance of the engine through a graphical user interface known as the \textit{analysis board}
+to see where they may have made a mistake and where they could have improved their position. Features such as
+chess.com's \textit{Game Review} help automate this process by directly suggesting moves to the player rather
+than the player having to find the best moves by scouring through the engine lines themselves.
+
+However, at large-scale chess tournaments, games are played over-the-board (OTB), \textbf{NOT} online, so players
+are required to manually record their moves as there is no automated process that does it for them. Because of this,
+there is also no automated process that actually \textit{converts} the moves into a PGN. Players have to manually
+input their games into the analysis board for a PGN to be generated and for the engine to analyze it. For short games
+that last less than 30 moves, this manual process is barable, but for very long games that last over 50 moves,
+sometimes even crossing the 100-move mark, it becomes extremely tedious and prone to mistakes. DecryptZero
+aims to automate this process, making it more efficient and reliable. What might take 10 to 20 minutes to convert
+manually will only take a few seconds with the model.
+
+% ----------------------------------------------------------------------------------------------------------------------
+
+\newpage
+
+% ----------------------------------------------------------------------------------------------------------------------
+
+
+% section 3 - the process
+\section{The Process}
+
+Here is a simple step-by-step process that will be used to automatically read a notation sheet:
+\begin{enumerate}
+    \item Scan the notation sheet as an image (this will be done by the user)
+    \item Process the image to remove noise (such as unwanted stains or extraneous marks) and amplify important details
+    \item Create bounding boxes around each move
+    \item Read the move in each bounding box
+    \item Convert the list of moves into a PGN
+\end{enumerate}
+
+The user initially takes a picture or scan of their notation sheet, which they can then put into a program that actually
+performs the OCR. (In future versions a GUI will be programmed to make the process even more efficient.) The image is
+then processed using a library called OpenCV. OpenCV contains a variety of modules that can be used to align, recolor,
+and remove noise from images.
+
+After the image is processed, a boxing algorithm creates bounding boxes over all the regions of interest (ROIs).
+In this case, each box on the notation sheet where a chess move will exist is considered an ROI.
+
+This is when the actual OCR procedure begins. The trained version of EasyOCR will read the move in each bounding box
+and convert it to text, then create a list consisting of each move it reads. EasyOCR might make mistakes while reading
+the moves, however, which is why there is a correction algorithm in place to fix any reading errors that the model might
+make. Finally, the list of moves will be converted to PGN via a script. The user can then copy and paste this PGN into
+an analysis board.
+
+% ----------------------------------------------------------------------------------------------------------------------
+
+\newpage
+
+% ----------------------------------------------------------------------------------------------------------------------
+
+%section 4 - training
+\section{The Engine}
+
+\subsection{Choosing the Right Base Model}
+
+The main part of the project is training the engine to perform OCR in the correct way to get optimal results. There were
+a few main candidates that were expected to perform well for this task:
+\begin{itemize}
+    \item Tesseract 5
+    \item Kraken
+    \item EasyOCR
+\end{itemize}
+Tesseract is by far the most well known OCR model due to its simplicity in usage and compatibility with image processing
+libraries, but after attempting to train it on handwriting data, it became clear that Tesseract is not well suited for 
+non-printed text.
+
+Kraken is a much lesser known OCR model, but it is actually mainly an HTR (handwritten text recognition) model. For this
+reason, it was a decent candidate for training the model that will be used for this project. However, utilizing Kraken
+was not convenient to use through a programming interface. The main way to use Kraken (and train models using its
+structuring) is through a graphical user interface called eScriptorium, not a command line interface or code editor.
+
+Therefore, EasyOCR was the best option. EasyOCR has a simple documentation, which made training quite easy.
+Because EasyOCR is trained primarily on printed text and not human handwriting, it is necessary to generate enough
+handwriting samples to train a reliable model that can somewhat accurately read the notation sheets.
+
+\subsection{Training and Testing}
+The model itself is a convolutional neural network (CNN) trained using the PyTorch library. The model is run on a scene
+text recognition (STR) framework that consists of four stages:
+\begin{enumerate}
+    \item Transformation - preprocessing the image by converting it to numerical data
+    \item Feature Extraction - extracting key numerical features to train on, preserving the information in the raw data
+    \item Sequence Modeling - creating the neural network, processing inputs in sequential order
+    \item Prediction - making a guess as to what the image says using the processed numerical data
+\end{enumerate}
+The transformation method used was thin plate splining (TPS). TPS works by defining many polynomial functions and
+combining them in a piecewise method to interpolate data and smooth it out before processing. TPS is analogous to a
+true \textit{thin plate} or sheet of metal, which resists bending. Likewise, the TPS fit resists "bending", and thus
+while it provides infinitely differentiable smooth fit surfaces, it lacks levelness as the fit itself deflects in a
+direction perpendicular to the image being modeled.
+
+Once the image is aligned using the TPS transformation, it becomes much easier to extract the dynamic features within the input. The model performs feature extraction using a residual neutral network (ResNet). A ResNet model is like a highway system, with "entrance" gates controlled by some kind of signal. Certain gates are weighted more heavily than others as the training progresses and the engine "realizes" what features are more likely to appear in an image, and so an inherent bias is introduced. This is like when a certain entrance ramp to a highway is more congested than another and so that entrance is moderated more intensely. During the process of feature extraction, only the shape of the object being identified is important; color, background, and other unnecessary elements are omitted.
+
+The outputs of the feature extraction are then passed into a bidirectional long short-term memory (BiLSTM) model. A BiLSTM can be separated into two separate functions: the bidirectional aspect of training and the long short-term memory aspect of storage capability. The bidirectional aspect of training allows the information to flow in the forward direction (as in a feedforward neural network), where the previous element's output is the next element's input, but also in the opposite direction, where the previous element's input is the next element's output. The long short-term memory allows for important data to be stored in a consistent manner while the training completes, unlike a regular short-term memory model where each data element is removed from memory as soon as all computations with that data element are completed. This allows for the model to "skip" layers based on their priority, but it requirs extra storage.
+
+Finally, the model makes a prediction using an attention (Attn) based BiLSTM. The attention based model simply makes predictions by examining the key points and more weighted biases, which allows it to to dynamically read information.
+The attention based model can also prevent forgetting of data and evaluate different hidden state weights at different time steps to find correlations.
+
+% ----------------------------------------------------------------------------------------------------------------------
+
+\newpage
+
+% ----------------------------------------------------------------------------------------------------------------------
+
+% section 5 - results
+\section{Results}
+Three different models were tested. The first model was trained on poor resolution pencil writing that was misaligned in multiple ways. The character set was restricted to only include legal characters in chess notation. The second model was trained on the full English character set, which includes all the digits, all the letters in upper and lowercase, and the special symbols used in the language. The model was trained on more well defined images of black pen handwriting and no transformations (misalignments). The final version was trained on the restricted character set and on well defined black pen images with no transformations.
+
+The first version was the least accurate: it only detected three different characters within the character set and it did not detect that many boxes on the input image. The second image was more accurate, but since it used the entire character set from the English alphabet, there was more error. However, the formatting of the recognized text was somewhat correct. The third version with both the restricted character set and the higher resolution data performed the best. The OCR was able to detect and recognize a lot of the input regions of interest with great accuracy, though a lot of fine tuning can still be performed.
+
+\end{document}

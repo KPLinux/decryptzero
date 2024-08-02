@@ -1,0 +1,237 @@
+% preamble
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usecolortheme{orchid}
+\usepackage{graphicx}
+\usepackage{dirtytalk}
+
+% begin
+\begin{document}
+% title page
+\title{Algorithms}
+\author[Premchander]{Kanishk Premchander}
+\institute[ICR Portland 2024]{Institute for Computing in Research}
+\date[08/02/2024]{August 2, 2024}
+
+\frame{\titlepage}
+
+% section 1 - algorithm intro
+\section{What is an Algorithm?}
+
+\begin{frame}{What is an Algorithm?} \pause
+    \begin{figure}
+        \begin{minipage}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.75\textwidth]{images/alg-flow.png}
+        \end{minipage}
+        \begin{minipage}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.75\textwidth]{images/alg-flow2.png}
+        \end{minipage}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{What is an Algorithm?}
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/ikea-manual.png}
+\end{frame}
+
+\begin{frame}{What is an Algorithm?} \pause
+    \begin{figure}
+        \begin{minipage}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{images/basic-alg-1.png}
+            \caption{Simple Addition Algorithm} \pause
+        \end{minipage}
+        \begin{minipage}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{images/basic-alg-1-out.png}
+            \caption{Result of adder(5, 10)}
+        \end{minipage}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{What is an Algorithm?} \pause
+    \begin{figure}
+        \begin{minipage}{\textwidth}
+            \begin{minipage}{0.5\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{images/basic-alg-2.png}
+                \caption{More Complex Quadratic Algorithm} \pause
+            \end{minipage}%
+            \begin{minipage}{0.5\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{images/basic-alg-2-print.png}
+                \caption{Print Statements} \pause
+            \end{minipage}
+        \end{minipage}
+        \begin{minipage}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{images/basic-alg-2-out.png}
+            \caption{Results of Using quadratic Algorithm}
+        \end{minipage}
+    \end{figure}
+\end{frame}
+
+% section 2 - search algorithms
+\section{Search Algorithms}
+
+% section 2.1 - linear search
+\subsection{Linear Search}
+
+\begin{frame}{Linear Search} \pause
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=0.5\textwidth,keepaspectratio]{images/ls-flow.png}
+            \caption{Linear Search Flowchart}
+        \end{center}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Linear Search}
+    \begin{figure}
+        \includegraphics[width=0.5\textwidth,keepaspectratio]{images/linear-search-code.png}
+        \caption{Example Code}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Linear Search}
+    \begin{figure}
+        \begin{minipage}{0.5\textwidth}
+            \begin{center}
+                \includegraphics[width=0.75\textwidth,keepaspectratio]{images/ls-out-1.png}
+                \caption{Output 1}
+            \end{center}
+        \end{minipage}%
+        \begin{minipage}{0.5\textwidth}
+            \begin{center}
+                \includegraphics[width=0.75\textwidth,keepaspectratio]{images/ls-out-2.png}
+                \caption{Output 2}
+            \end{center}
+        \end{minipage}
+    \end{figure}
+\end{frame}
+
+% section 2.2 - linear search
+\subsection{Binary Search}
+
+\begin{frame}{Binary Search} \pause
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=0.5\textwidth,keepaspectratio]{images/bs-flow.png}
+            \caption{Binary Search Flowchart}
+        \end{center}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Binary Search}
+    \begin{figure}
+        \centering
+        \includegraphics[height=0.75\textheight]{images/binary-search-code.png}
+        \caption{Example Code}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Binary Search}
+    \begin{figure}
+        \begin{minipage}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.5\textwidth]{images/bs-out-even-low.png}
+            \caption{Even-Low Output}
+            \includegraphics[width=0.5\textwidth]{images/bs-out-even-high.png}
+            \caption{Even-High Output}
+        \end{minipage}%
+        \begin{minipage}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.5\textwidth]{images/bs-out-odd-low.png}
+            \caption{Odd-Low Output}
+            \includegraphics[width=0.5\textwidth]{images/bs-out-odd-high.png}
+            \caption{Odd-High Output}
+        \end{minipage}
+    \end{figure}
+\end{frame}
+
+% section 3 - big O notation
+\section{Big O Notation and Runtime}
+
+\begin{frame}{Big O Notation and Runtime} \pause
+    \[f(x)=3x^4+7x^3+x+1\] \pause
+
+    Therefore, in Big O notation, the function would look something like this:
+    \[f(x) \in O(x^4)\] \pause \newline
+    \begin{center}
+        $x^4$ time complexity
+    \end{center}
+\end{frame}
+
+% section 4 - more on runtime
+\section{Runtime Problems}
+
+% section 4.1 - reasonable vs unreasonable time
+\subsection{Reasonable vs Unreasonable Time}
+
+\begin{frame}{Reasonable vs Unreasonable Time}
+    Take a look at this sample table of runtime model orders and actual runtimes (in nanoseconds) for different input sizes:
+    \begin{center}
+        \begin{tabular}{ |c|c|c|c|c|c| } 
+            \hline
+            \mbox{} & $log(x)$ & $x$ & $x^2$ & $2^x$ & $x!$ \\
+            \hline
+            $2$ & $0.301$ & $2.00$ & $4.00$ & $4.00$ & $2.00$ \\
+            $5$ & $0.699$ & $5.00$ & $2.50*10^1$ & $3.20*10^1$ & $1.20*10^2$ \\
+            $10$ & $1.00$ & $10.0$ & $1.00*10^2$ & $1.02*10^3$ & $3.63*10^6$ \\
+            $20$ & $1.30$ & $20.0$ & $4.00*10^2$ & $1.05*10^6$ & $2.43*10^{18}$ \\
+            $50$ & $1.699$ & $50.0$ & $2.50*10^3$ & $1.13*10^{15}$ & $3.04*10^{64}$ \\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{frame}
+
+% section 4.2 - P vs NP
+\subsection{The P vs NP Problem}
+
+\begin{frame}{The P vs NP Problem} \pause
+    \begin{itemize}
+        \item \textbf{class-P} (\textit{polynomial} time) \pause
+        \item \textbf{class-NP} (\textit{nondeterministic polynomial} time)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{The P vs NP Problem} \pause
+    \begin{figure}
+        \begin{minipage}{0.5\textwidth}
+            \begin{center}
+                \includegraphics[width=\textwidth,keepaspectratio]{images/P<NP.png}
+                \caption{P as a subset of NP} \pause
+            \end{center}
+        \end{minipage}%
+        \begin{minipage}{0.5\textwidth}
+            \begin{center}
+                \includegraphics[width=\textwidth,keepaspectratio]{images/P=NP.png}
+                \caption{P as equal to NP}
+            \end{center}
+        \end{minipage}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{A Quote For the Road} \pause
+    \begin{center}
+        \begin{minipage}{0.8\textwidth}
+            \textit{Perhaps the most important principle for the good algorithm designer is to refuse to be content.}
+
+            \hspace{1cm}---Alfred V. Aho
+        \end{minipage}
+    \end{center}
+\end{frame}
+
+% section 5 - bibliography
+\section{Bibliography}
+
+\begin{frame}{Bibliography}
+    \begin{enumerate}
+        \item Wikipedia. (n.d.). Big O Notation. Wikipedia. Retrieved July 29, 2024, from https://en.wikipedia.org/wiki/Big\_O\_notation
+        \item Wikipedia. (n.d.). P versus NP problem. Wikipedia. Retrieved July 29, 2024, from https://en.wikipedia.org/wiki/P\_versus\_NP\_problem
+    \end{enumerate}
+\end{frame}
+
+\end{document}
